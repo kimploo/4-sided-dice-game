@@ -6,13 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>4-Sided Dice Game</title>
   <style>
+    html {
+    }
+
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       background-color: #f5f5f5;
       margin: 0;
-      padding: 20px;
       color: #333;
+      display: flex;
+      justify-content: center;
+      height: 100dvh;
     }
 
     .game-container {
@@ -49,15 +54,6 @@
       transition: transform 0.5s ease, background-color 0.5s ease;
       position: relative;
       background-color: #3f51b5;
-    }
-
-    .dice::before {
-      content: "d4";
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      font-size: 10px;
-      opacity: 0.7;
     }
 
     button {
@@ -114,29 +110,8 @@
       margin-bottom: 5px;
     }
 
-    @media (max-width: 480px) {
-      .game-container {
-        padding: 15px;
-      }
-
-      .dice {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .rules ul {
-        padding-left: 15px;
-      }
-    }
-
     .table-container {
       margin: 0 auto;
-      margin-top: 50px;
       background-color: white;
       border-radius: 8px;
       padding: 20px;
@@ -151,7 +126,7 @@
       border-collapse: collapse;
       margin: auto;
     }
-    
+
     th,
     td {
       border: 1px solid #ccc;
@@ -168,66 +143,101 @@
       background-color: #f4f4f4;
       font-weight: bold;
     }
+    
+    main {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .top {
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+    
+    footer {
+      padding-bottom: 20px;
+    }
+    
+    footer a {
+      color: rgba(183, 183, 183, 0.84);
+    }
+
   </style>
 </head>
 
 <body>
-  <div class="game-container">
-    <h1>주사위 질문지</h1>
-    <p>[ → 방향 숫자, ↓ 방향 숫자 ] 질문에 답변하세요.</p>
+  <main>
+    <div class="top">
 
-    <div class="dice-container">
-      <div class="dice" id="dice1">1</div>
-      <div class="dice" id="dice2">1</div>
+      <div class="game-container">
+        <h1>주사위 질문지</h1>
+        <p>[ → 방향 숫자, ↓ 방향 숫자 ] 질문에 답변하세요.</p>
+
+        <div class="dice-container">
+          <div class="dice" id="dice1">1</div>
+          <div class="dice" id="dice2">1</div>
+        </div>
+
+        <div class="result" id="result">주사위를 굴려주세요!</div>
+        <button id="rollButton">Roll Dice</button>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-header">1</td>
+              <td>프론트엔드 개발을 처음 접하게 된 계기는 무엇인가요?</td>
+              <td>최근에 재미있게 봤거나 인상 깊었던 웹사이트가 있다면 소개해 주세요.</td>
+              <td>배우는 중이거나 가장 자신 있는 프론트엔드 기술 스택은 무엇인가요?</td>
+              <td>개발하면서 가장 뿌듯했던 순간은 언제였나요?</td>
+            </tr>
+            <tr>
+              <td class="row-header">2</td>
+              <td>코딩을 음식에 비유한다면 어떤 음식 같나요?</td>
+              <td>프론트엔드 개발자가 아니라면 어떤 일을 하고 있을 것 같나요?</td>
+              <td>개발 중 자주 듣는 음악이나 플레이리스트가 있나요?</td>
+              <td>최근에 본 유튜브나 인스타 릴스 중 기억에 남는 개발 관련 콘텐츠가 있다면?</td>
+            </tr>
+            <tr>
+              <td class="row-header">3</td>
+              <td>올해 안에 이루고 싶은 개발 관련 목표는 무엇인가요?</td>
+              <td>존경하는 개발자나 롤모델이 있다면 누구인가요?</td>
+              <td>개발할 때 가장 자주 쓰는 말버릇이나 혼잣말이 있다면요?</td>
+              <td>프로그래밍 언어들이 사람이라면, JavaScript는 어떤 성격의 친구일까요?</td>
+            </tr>
+            <tr>
+              <td class="row-header">4</td>
+              <td>개발 관련된 재미있는 밈 하나 소개해 주세요.</td>
+              <td>개발자에게 꼭 필요한 초능력이 하나 생긴다면 어떤 능력이었으면 좋겠나요?</td>
+              <td>버그가 생겼을 때 본인의 반응을 이모지로 표현한다면 어떤 조합일까요?</td>
+              <td>Git에 커밋 메시지를 남기듯, 오늘의 기분을 커밋 메시지로 남긴다면 뭐라고 쓰시겠어요?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="result" id="result">주사위를 굴려주세요!</div>
-    <button id="rollButton">Roll Dice</button>
-  </div>
-
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>1</th>
-          <th>2</th>
-          <th>3</th>
-          <th>4</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="row-header">1</td>
-          <td>프론트엔드 개발을 처음 접하게 된 계기는 무엇인가요?</td>
-          <td>최근에 재미있게 봤거나 인상 깊었던 웹사이트가 있다면 소개해 주세요.</td>
-          <td>배우는 중이거나 가장 자신 있는 프론트엔드 기술 스택은 무엇인가요?</td>
-          <td>개발하면서 가장 뿌듯했던 순간은 언제였나요?</td>
-        </tr>
-        <tr>
-          <td class="row-header">2</td>
-          <td>코딩을 음식에 비유한다면 어떤 음식 같나요?</td>
-          <td>프론트엔드 개발자가 아니라면 어떤 일을 하고 있을 것 같나요?</td>
-          <td>개발 중 자주 듣는 음악이나 플레이리스트가 있나요?</td>
-          <td>최근에 본 유튜브나 인스타 릴스 중 기억에 남는 개발 관련 콘텐츠가 있다면?</td>
-        </tr>
-        <tr>
-          <td class="row-header">3</td>
-          <td>올해 안에 이루고 싶은 개발 관련 목표는 무엇인가요?</td>
-          <td>존경하는 개발자나 롤모델이 있다면 누구인가요?</td>
-          <td>개발할 때 가장 자주 쓰는 말버릇이나 혼잣말이 있다면요?</td>
-          <td>프로그래밍 언어들이 사람이라면, JavaScript는 어떤 성격의 친구일까요?</td>
-        </tr>
-        <tr>
-          <td class="row-header">4</td>
-          <td>개발 관련된 재미있는 밈 하나 소개해 주세요.</td>
-          <td>개발자에게 꼭 필요한 초능력이 하나 생긴다면 어떤 능력이었으면 좋겠나요?</td>
-          <td>버그가 생겼을 때 본인의 반응을 이모지로 표현한다면 어떤 조합일까요?</td>
-          <td>Git에 커밋 메시지를 남기듯, 오늘의 기분을 커밋 메시지로 남긴다면 뭐라고 쓰시겠어요?</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <footer>
+      <a href="https://m.blog.naver.com/00ill2/222709207462">Special</a>
+      <a href="https://claude.ai/">Thanks</a>
+      <a href="https://softsquared.com/">To</a>
+    </footer>
+  </main>
 
   <script>
     // Game variables
