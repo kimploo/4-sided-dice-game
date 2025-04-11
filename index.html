@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-Sided Dice Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .game-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .dice-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .dice {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            border-radius: 8px;
+            transition: transform 0.5s ease, background-color 0.5s ease;
+            position: relative;
+            background-color: #3f51b5;
+        }
+        
+        .dice::before {
+            content: "d4";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        
+        button {
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 8px 4px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #303f9f;
+        }
+        
+        button:disabled {
+            background-color: #9fa8da;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            min-height: 1.5em;
+        }
+        
+        .score {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .rules {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #666;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .rules ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+        
+        .rules li {
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 15px;
+            }
+            
+            .dice {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .rules ul {
+                padding-left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>4-Sided Dice Game</h1>
+        <p>Roll the dice to score points!</p>
+        
+        <div class="dice-container">
+            <div class="dice" id="dice1">1</div>
+            <div class="dice" id="dice2">1</div>
+        </div>
+        
+        <div class="result" id="result">Roll the dice to start!</div>
+        <button id="rollButton">Roll Dice</button>
+    </div>
+
+    <script>
+        // Game variables
+        let score = 0;
+        const dice1 = document.getElementById('dice1');
+        const dice2 = document.getElementById('dice2');
+        const resultElement = document.getElementById('result');
+        const scoreElement = document.getElementById('score');
+        const rollButton = document.getElementById('rollButton');
+        const resetButton = document.getElementById('resetButton');
+        
+        // Function to roll a single die (returns 1-4)
+        function rollDice() {
+            return Math.floor(Math.random() * 4) + 1;
+        }
+        
+        // Function to update dice display
+        function updateDiceDisplay(dieElement, value) {
+            // Set the number
+            dieElement.textContent = value;
+            
+            // Add animation effect
+            dieElement.style.transform = 'rotateY(360deg)';
+            
+            // Change color based on value
+            const colors = ['#e91e63', '#2196F3', '#4CAF50', '#9C27B0'];
+            dieElement.style.backgroundColor = colors[value - 1];
+            
+            setTimeout(() => {
+                dieElement.style.transform = 'rotateY(0)';
+            }, 500);
+        }
+        
+        // Function to handle dice roll
+        function handleRollClick() {
+            // Disable roll button during animation
+            rollButton.disabled = true;
+            
+            // Roll the dice
+            const dice1Value = rollDice();
+            const dice2Value = rollDice();
+            
+            // Update the visual dice
+            updateDiceDisplay(dice1, dice1Value);
+            updateDiceDisplay(dice2, dice2Value);
+            
+            let resultMessage = `first dice: ${dice1Value}, second dice: ${dice2Value}`;
+            
+            
+            // Update the result and score displays after animation
+            setTimeout(() => {
+                resultElement.textContent = resultMessage;
+                rollButton.disabled = false;
+            }, 600);
+        }
+        
+        // Function to reset the game
+        function resetGame() {
+            score = 0;
+            updateDiceDisplay(dice1, 1);
+            updateDiceDisplay(dice2, 1);
+            resultElement.textContent = 'Roll the dice to start!';
+            scoreElement.textContent = 'Total Score: 0';
+        }
+        
+        // Add event listeners
+        rollButton.addEventListener('click', handleRollClick);
+        resetButton.addEventListener('click', resetGame);
+    </script>
+</body>
+</html>
